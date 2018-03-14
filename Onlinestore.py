@@ -1,13 +1,21 @@
 ''' Question 1 HW3 Jaime Luengo Rozas jl3752
 This program implements Class Grocery, which contains a constructor and three 
 methods: buildInventory(), viewInventory() and checkOut(), to handle a small online 
-grocery store's inventory operations and check out transactions'''
+grocery store's inventory operations and check out transactions.
+
+The name of the items are automatically updated to upper case, and also the
+input.'''
 
 class Grocery:
     def __init__(self):
         self.inventory = {}
     def buildInventory(self,inv):
-        self.inventory = inv
+         for k, v in inv.iteritems():
+             k=k.upper();
+             if(self.inventory.has_key(k)):
+                 self.inventory.get(k)[0]+=v[0]
+             else:
+                 self.inventory[k]=v
     def viewInventory(self):
         if(len(self.inventory) == 0):
             print("The inventory is empty. Put an order ASAP.")
@@ -22,10 +30,9 @@ class Grocery:
         buy = raw_input("Do you want to buy something?")
         if(buy.lower() == "yes" or buy.lower() == "y"):
             flag = True
-            i=0
             invoice = []
             while(flag):
-                item = raw_input("Enter an item to buy:")
+                item = raw_input("Enter an item to buy:").upper()
                 if(item in self.inventory):
                     qi = self.inventory.get(item)[0] #quantity of stock in inventory
                     if(qi>0):
@@ -33,13 +40,8 @@ class Grocery:
                         if(qr>qi):
                             print("Not enough in stock; we can "
                                   "only sell you %d item(s)." % qi)
-                            stillbuy= raw_input("Do you still want to buy it?")
-                            if(stillbuy.lower()=="yes" or stillbuy.lower()=="y"):
-                                self.inventory.get(item)[0] = max(0,qi-qr)
-                                invoice.append((item,min(qr,qi)))
-                        else:
-                            self.inventory.get(item)[0] = max(0,qi-qr)
-                            invoice.append((item,min(qr,qi)))
+                        self.inventory.get(item)[0] = max(0,qi-qr)
+                        invoice.append((item,min(qr,qi)))
                         
                 if(item not in self.inventory or qi == 0):
                     print("Wrong item name or out of stock.")
@@ -52,7 +54,7 @@ class Grocery:
             print("Goobye.")
 
         if(len(invoice)==0):
-            print("Goodbye")
+            print("Goodbye.")
         else:
             print("Item\tQuantity\tPrice\t Subtotal")
             print("-"*50)
@@ -64,3 +66,6 @@ class Grocery:
             print("-"*50)
             print("Please pay $ %.2f \n\nGoodbye." % total)
     
+            
+        
+
