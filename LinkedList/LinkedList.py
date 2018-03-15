@@ -1,10 +1,11 @@
 ''' Question 2 HW2 Jaime Luengo Rozas jl3752
 .'''
+from node import Node
 
 class LinkedList:
 
     def __init__(self):
-        self.head = Node
+        self.head = None
 
     def isEmpty(self):
         return self.head == None
@@ -50,8 +51,14 @@ class LinkedList:
     #print all elements of the linkedlist        
     def printList(self):
         current = self.head
-        while current!= None:
-              print( current.getData(), )
+        if(self.isEmpty()):
+            print "[]",
+        else:
+            print "[ %d"% current.getData(),
+            while current.getNext() is not None:
+                current = current.getNext()
+                print ",%d" % current.getData(),
+            print "]",
 
     #find how many times a given paramenters appears in a linkedlist
     #and in what possitions
@@ -63,30 +70,33 @@ class LinkedList:
         while current != None:
             if current.getData() == element:
                 found = True
-                positions.add(index)
-            else:
-                current=current.getNext()
+                positions.append(index)
+            current=current.getNext()
+            index+=1
         if not found:
              print("element was not found")
         else:
-             print(("%d is found %d time(s) at positions"+positions)
-                   %element,len(positions))
+             print(("%d is found %d time(s) at positions "+str(positions))
+                   %(element,len(positions)))
 
     def insert(self, position, element):
         current = self.head
         node_new = Node(element)
         for i in range(1,position):
             current = current.getNext()
-        if postion == 0:
-            node_new.setNext(current.getNext())
+        if position == 0:
+            node_new.setNext(self.head)
             self.head = node_new
         else:
             node_new.setNext(current.getNext())
             current.setNext(node_new)
 
     def popAtIndex(self,position):
+        current = self.head
         if(position==0):
+            val = current.getData()
             self.head=self.head.getNext()
+            return val
         else:
             for i in range(1,position):
                 current = current.getNext()
@@ -97,27 +107,9 @@ class LinkedList:
     def appendLast(self,element):
         current = self.head
         node_last = Node(element)
-        while current.getNext()!=None:
-             current = current.getNext()
-        current.setNext(node_last)
-        
-    class Node:
-        def __init__(self,initdata):
-            self.data = inidata
-            self.next = None
-
-        #return the data of a node
-        def getData(self):
-             return self.data
-
-        #return the reference to next node
-        def getNext(self):
-            return self.next
-
-        #assign a new data value to the current node
-        def setData(self, newdata):
-            self.data = newdata
-
-        #assign a new reference pointing to the next node
-        def setNext(self,newnext):
-            self.next = newnext
+        if(self.isEmpty()):
+            self.head = node_last
+        else:
+            while current.getNext()!=None:
+                 current = current.getNext()
+            current.setNext(node_last)
