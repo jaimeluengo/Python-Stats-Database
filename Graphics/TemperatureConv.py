@@ -13,12 +13,12 @@ def main():
     Text(Point(90,150), "Celsius Temperature").draw(win)
     Text(Point(105,100), "Farenheit Temperature").draw(win)
     input1 = Entry(Point(240,150),5)
-    input1.setText("0.0")
+    input1.setText("")
     input1.draw(win)
 
     
     input2 = Entry(Point(240,100),5)
-    input2.setText("0.0")
+    input2.setText("")
     input2.draw(win)
 
 
