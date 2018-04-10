@@ -1,7 +1,8 @@
 '''
 Jaime Luengo Rozas
 jl3752
-Program to produce APR chart
+Program to produce investment growth chart over 10 years given a principle
+and the APR
 '''
 
 from graphics import *
@@ -18,7 +19,7 @@ def main():
     print 'Plotting the growth of a 10-year investment'
 
     #get principal and interest rate
-    principal = input('Enter initial principal: ')
+    principal = input('Enter initial principal in $: ')
     apr = input('Enter annualized interest rate: ')
     #For debugging purposes:
     #principal = 10000
@@ -31,7 +32,7 @@ def main():
     earn10 = (principal)*pow((1+apr),10)
     pix_r = 200/earn10 #k dollars per pixel
     for i in range(0,5):
-        lbl=Text(Point(30,30+i*50), str(round(earn10*i/5000,1))+'K')
+        lbl=Text(Point(30,30+i*50), str(round(earn10*i/4000,1))+'K')
         lbl.setSize(8)
         lbl.draw(win)
         
