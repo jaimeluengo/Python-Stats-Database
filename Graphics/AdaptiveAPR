@@ -1,0 +1,60 @@
+'''
+Jaime Luengo Rozas
+jl3752
+Program to produce APR chart
+'''
+
+from graphics import *
+import random
+
+def color():
+    r = random.randrange(256)
+    g = random.randrange(256)
+    b = random.randrange(256)
+
+    return color_rgb(r,g,b)
+
+def main():
+    print 'Plotting the growth of a 10-year investment'
+
+    #get principal and interest rate
+    principal = input('Enter initial principal: ')
+    apr = input('Enter annualized interest rate: ')
+    #For debugging purposes:
+    #principal = 10000
+    #apr = 0.5
+
+    #create a graphic window with labels on the left edge
+    win = GraphWin('Investment Growth Chart', 330, 260)
+    win.setCoords(0,0,330,260)
+    win.setBackground('white')
+    earn10 = (principal)*pow((1+apr),10)
+    pix_r = 200/earn10 #k dollars per pixel
+    for i in range(0,5):
+        lbl=Text(Point(30,30+i*50), str(round(earn10*i/5000,1))+'K')
+        lbl.setSize(8)
+        lbl.draw(win)
+        
+    #draw line
+    aLine = Line(Point(10,30),Point(10,250))
+    aLine.draw(win)
+
+    # draw bars
+    for year in range(0,11):
+        #calculate value for the next year
+        x1=25*year+50
+        bar  = Rectangle(Point(x1,30),Point(x1+25,30+principal*pix_r))
+        principal = principal*(1+apr) #updated after drawing bar
+        bar.setFill(color())
+        bar.draw(win)
+        lbl2 = Text(Point(x1+12,20),str(year))
+        lbl2.setSize(8)
+        lbl2.draw(win)
+    lbl3 = Text(Point(175,7),'Year')
+    lbl3.setSize(8)
+    lbl3.draw(win)
+    
+    raw_input('Press <Enter> to quit')
+    win.close()
+    
+main()
