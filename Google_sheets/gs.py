@@ -1,4 +1,4 @@
-'''This library is used to interface raspberry pi with our own data sheet'''
+'''This library is used to interface raspberry pi with our own google sheets'''
 
 
 import gspread
