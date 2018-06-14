@@ -1,9 +1,17 @@
-'''This module is used to create a new spreadsheet or a worksheet depending on the method called.
-By default it has called new_worksheet that creates a worksheet'''
+'''This library is used to interface raspberry pi with our own data sheet'''
 
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+
+
+scope = ['https://spreadsheets.google.com/feeds',
+     'https://www.googleapis.com/auth/drive']
+
+#IMPORTANT: Have json file in same folder as this python file
+credentials = ServiceAccountCredentials.from_json_keyfile_name('Visualization-ee1403d96de7.json', scope)
+
+gc = gspread.authorize(credentials)
 
 '''Creates a new spreadsheet called <name> and shares it with <jaime.iko.dev@gmail.com>'''
 def new_spreadsheet(name):
@@ -18,15 +26,9 @@ def new_worksheet(sp_name,name):
     wks = gc.open(sp_name)
     wks.add_worksheet(name,nrows,ncolums)
 
-scope = ['https://spreadsheets.google.com/feeds',
-         'https://www.googleapis.com/auth/drive']
 
-#IMPORTANT: Have json file in same folder as this python file
-credentials = ServiceAccountCredentials.from_json_keyfile_name('Visualization-ee1403d96de7.json', scope)
 
-gc = gspread.authorize(credentials)
-new_spreadsheet("iko3")
-#new_worksheet("iko2","iko3") 
+
 
 
 
