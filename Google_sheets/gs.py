@@ -25,12 +25,20 @@ def new_worksheet(sp_name,name):
     nrows = 10000
     ncolums = 20
     wks = gc.open(sp_name)
-    wks.add_worksheet(name,nrows,ncolums)
+    return wks.add_worksheet(name,nrows,ncolums)
     
-'''Inserts a row at a given index in a worksheet inside a spreadsheet '''   
+'''Inserts a row at a given index in a worksheet inside a spreadsheet. If the worksheet
+does not exists, creates a new one and imports first row from a given one'''   
 def insert_row(sp_name,worksheet_name,row_index,row):
    sp = gc.open(sp_name)
-   wks = sp.worksheet(worksheet_name)
+   try:
+       wks = sp.worksheet(worksheet_name)
+   except gspread.exceptions.WorksheetNotFound: #if the worksheet is not created
+       #Copy row from a given worksheet to the new one
+       first_row = sp.worksheet("iko6").row_values(1,"UNFORMATTED_VALUE")
+       print str(first_row)
+       wks = new_worksheet(sp_name,worksheet_name)
+       insert_row(sp_name,worksheet_name,1,first_row)
    wks.insert_row(row,row_index)
 
 
