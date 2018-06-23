@@ -1,2 +1,3 @@
 # Python-Stats-Database
-STSCI homework
+-Google sheets library
+-Database driven webpage using Oracle database and cgi
